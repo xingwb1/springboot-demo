@@ -1,0 +1,19 @@
+spring:
+
+  #redis#
+  redis:
+    # Redis服务器地址
+    host: r-2zewwdoy9bxanpxx5opd.redis.rds.aliyuncs.com
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: hep12345!
+    # Redis数据库索引（默认为0）
+    database: 0
+    timeout: 3s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: 3s
+        max-active: 8
