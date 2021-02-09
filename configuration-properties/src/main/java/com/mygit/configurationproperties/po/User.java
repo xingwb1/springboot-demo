@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
  * @author 邢武彪
  */
 @Data
-@Component
-@ConfigurationProperties(prefix = "connection")
+//@Component
+//@ConfigurationProperties(prefix = "connection")
 public class User {
     private String userName;
     private String passWord;
