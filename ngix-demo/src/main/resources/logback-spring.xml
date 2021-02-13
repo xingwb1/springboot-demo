@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 定义通用的属性 -->
+    <!-- 普通日志目录 -->
+    <springProperty scope="context" name="log_path_logger" source="log.path.logger"/>
+    <!-- 打点日志目录 -->
+    <springProperty scope="context" name="log_path_dot" source="log.path.dot"/>
+
+    <!-- 日志级别 -->
+    <springProperty scope="context" name="log_level_console" source="log.level.console"/>
+    <springProperty scope="context" name="log_level_root" source="log.level.root"/>
+    <springProperty scope="context" name="log_level_logger" source="log.level.logger"/>
+    <Property name="log_level_dot" value="INFO"/>
+
+    <!-- 日志保存 -->
+    <Property name="log_max_history_logger" value="7"/>
+    <Property name="log_max_history_dot" value="1"/>
+
+
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+
+    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+    <property name="log_pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %msg%n"/>
+    <property name="log_pattern_short" value="%date{yyyyMMdd HH:mm:ss.SSS}-%msg%n"/>
+    <!-- 彩色日志格式 -->
+    <property name="log_pattern_color"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(--){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="log_pattern_dot" value="%m%n"/>
+
+
+    <!-- 控制台 -->
+    <appender name="stdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${log_pattern_color}</pattern>
+        </layout>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${log_level_console}</level>
+        </filter>
+    </appender>
+
+    <!-- DEBUG -->
+    <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path_logger}/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log_path_logger}/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>${log_max_history_logger}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern_color}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO -->
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path_logger}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log_path_logger}/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>${log_max_history_logger}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern_color}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- WARN -->
+    <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path_logger}/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log_path_logger}/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>${log_max_history_logger}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern_color}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR -->
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path_logger}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log_path_logger}/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>${log_max_history_logger}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern_color}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- DOT -->
+    <appender name="dotAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path_dot}/dot.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log_path_dot}/dot-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>${log_max_history_dot}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern_dot}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>${log_level_dot}</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="dotLogger" additivity="false">
+        <level value="${log_level_dot}"/>
+        <appender-ref ref="stdoutAppender"/>
+        <appender-ref ref="dotAppender"/>
+    </logger>
+
+    <root level="${log_level_root}">
+        <appender-ref ref="stdoutAppender"/>
+        <appender-ref ref="debugAppender"/>
+        <appender-ref ref="infoAppender"/>
+        <appender-ref ref="warnAppender"/>
+        <appender-ref ref="errorAppender"/>
+    </root>
+</configuration>

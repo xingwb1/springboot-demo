@@ -1,10 +1,10 @@
 package com.mygit.springbootcrontab.job;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,18 +18,19 @@ import java.util.Date;
  * @author 邢武彪
  */
 @EnableScheduling
-//@Configuration
+@Configuration
 @Slf4j
-@Deprecated
-public class LocalCronJobDemo {
-    // 每两秒
-    final private String cron = "*/2 * * * * *";
-    // 从第0秒开始, 每2秒
+public class DistributeCronJobDemo {
+    @Value("${server.port}")
+    private String port;
+
     final private String cron2 = "0/2 * * * * *";
+
+    private final String CRON_TIME_AT_1_AM = "0 0 1 * * ? ";
 
     @Scheduled(cron = cron2)
     public void job() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        log.info(format.format(new Date()));
+        log.info(format.format(new Date()) + "项目端口: " + port);
     }
 }
