@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.mygit</groupId>
+	<artifactId>redis-distribute-lock-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>redis-distribute-lock-demo</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<jackson.version>2.9.10</jackson.version>
+		<slf4j.version>1.7.26</slf4j.version>
+		<fastjson.version>1.2.58</fastjson.version>
+		<commons-lang3.version>3.9</commons-lang3.version>
+		<lombok.version>1.18.4</lombok.version>
+		<okhttp.version>3.14.7</okhttp.version>
+		<hutool-all.version>4.5.1</hutool-all.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<guava.version>27.1-jre</guava.version>
+		<dubbo.version>2.6.7</dubbo.version>
+		<dubbo-registry-nacos.version>2.6.7</dubbo-registry-nacos.version>
+		<nacos.version>1.2.1</nacos.version>
+		<netty-all.version>4.1.33.Final</netty-all.version>
+		<dubbo-spring-boot-starter.version>0.2.0</dubbo-spring-boot-starter.version>
+		<snappy.version>1.1.2.6</snappy.version>
+		<elastic.version>7.4.0</elastic.version>
+		<elastic-client.version>7.4.0</elastic-client.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

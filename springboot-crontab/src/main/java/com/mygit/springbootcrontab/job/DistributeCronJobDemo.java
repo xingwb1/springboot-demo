@@ -18,14 +18,21 @@ import java.util.Date;
  * @author 邢武彪
  */
 @EnableScheduling
-@Configuration
+//@Configuration
 @Slf4j
 public class DistributeCronJobDemo {
+    /**
+     * 本项目端口, 验证多个Tomcat ,会多次执行定时任务
+     */
     @Value("${server.port}")
     private String port;
-
+    /**
+     * 每两秒
+     */
     final private String cron2 = "0/2 * * * * *";
-
+    /**
+     * 从第0秒开始, 每2秒
+     */
     private final String CRON_TIME_AT_1_AM = "0 0 1 * * ? ";
 
     @Scheduled(cron = cron2)
