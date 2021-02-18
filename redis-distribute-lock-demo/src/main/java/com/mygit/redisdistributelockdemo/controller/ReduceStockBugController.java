@@ -3,12 +3,9 @@ package com.mygit.redisdistributelockdemo.controller;
 import com.mygit.redisdistributelockdemo.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
 
 /**
  * Description:
@@ -17,14 +14,15 @@ import java.util.Objects;
  * Date: 2021-02-13
  * Time: 9:45
  */
-@RestController
+//@RestController
 @RequestMapping("redis")
-public class ReduceStockController {
+public class ReduceStockBugController {
     /**
      * redis 工具类
      */
     @Autowired
     private RedisUtil util;
+
     private String key = "store";
     @Value("${server.port}")
     private String port;
@@ -48,7 +46,8 @@ public class ReduceStockController {
      */
     @RequestMapping("decr")
     public void decr() {
-//        util.decr(key, 1);
+        // 加锁
+
         /**
          *  synchronized java进程级的锁, 只能保证一个节点的一个Tomcat进程,中的代码块同步
          */
