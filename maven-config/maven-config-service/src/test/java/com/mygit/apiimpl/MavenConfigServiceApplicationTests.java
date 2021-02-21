@@ -1,4 +1,4 @@
-package com.mygit.mavenconfigservice;
+package com.mygit.apiimpl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
