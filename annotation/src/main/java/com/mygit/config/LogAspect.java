@@ -11,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Description:
@@ -45,6 +46,15 @@ public class LogAspect {
      * 中心名称(项目名), 模块名称
      */
     private final String PROJECT_NAME = "DATA_CENTER";
+    /**
+     * 模块名， execution(*  com.mygit.controller..*(..))  设置的生效的包，
+     */
+    private final String MODULE_NAME = "CONTROLLER";
+    /**
+     * 日志级别
+     */
+    private final String LOG_LEVEL = "INFO";
+
 
     /**
      * 切面生效范围: controller包下, 不包含other包
@@ -59,7 +69,13 @@ public class LogAspect {
         String url = request.getRequestURL().toString();
         String ip = request.getRemoteAddr();
 
-        //TODO 方法执行时 打印的日志 , 项目名称， 模块名称
+        /**
+         *     方法执行时 异常 message ,
+         *     项目名称： 每个模块添加的切面， 设为常量
+         *     模块名称： @Around 注解， 可设置切面生效的包  data-center/service
+         */
+
+
 
 
         //方法参数
@@ -70,8 +86,16 @@ public class LogAspect {
 
         //开始调用时间 计时并调用目标函数,获得返回值
         long start = System.currentTimeMillis();
-        Object returnValue = point.proceed(args);
-
+        // fixme 执行抛出的异常
+        Exception exception = null;
+        Object returnValue ;
+        try {
+            returnValue = point.proceed(args);
+        } catch (Exception e) {
+            exception = e;
+            log.error(e.getMessage(), e);
+            throw e;
+        }
         //代理方法对象
         //类名
         String clazzName = point.getTarget().getClass().getName();
@@ -82,8 +106,8 @@ public class LogAspect {
         Long time = System.currentTimeMillis() - start;
 
 
-        log.info("@Around：执行目标方法之后,模块名称 {},请求ip {},url {}, 类名 {}, 方法名 {}, 参数 {},返回值 {},总耗时 {} ms",
-               PROJECT_NAME, ip, url, clazzName, methodName, Arrays.toString(args), returnValue, time);
+        log.info("@Around：执行目标方法之后,项目名称 {}，模块名称 {},请求ip {},url {}, 类名 {}, 方法名 {}, 参数 {},返回值 {},产生异常 {},总耗时 {} ms",
+                PROJECT_NAME,MODULE_NAME, ip, url, clazzName, methodName, Arrays.toString(args), returnValue, exception.getMessage(), time);
 
         // 实际方法对象,可以获取方法注解等
         Class<?> clazz = point.getTarget().getClass();
@@ -123,6 +147,7 @@ public class LogAspect {
 //    public void afterReturningMethod(JoinPoint joinPoint, Exception e) {
 //        log.info("调用了异常通知");
 //    }
+
 
 }
 
